@@ -3,6 +3,7 @@ import yaml
 import argparse
 import numpy as np
 from pathlib import Path
+from dsprite_dataset import DspriteVAEDataset
 from models import *
 from experiment import VAEXperiment
 import torch.backends.cudnn as cudnn
@@ -39,7 +40,7 @@ model = vae_models[config['model_params']['name']](**config['model_params'])
 experiment = VAEXperiment(model,
                           config['exp_params'])
 
-data = VAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
+data = DspriteVAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
 
 data.setup()
 runner = Trainer(logger=tb_logger,
