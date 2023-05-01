@@ -1,7 +1,11 @@
 model_params:
-  name: "VanillaVAE"
-  in_channels: 1
+  name: 'BetaVAE'
+  in_channels: 3
   latent_dim: 128
+  loss_type: 'B'
+  gamma: 10.0
+  max_capacity: 25
+  Capacity_max_iter: 10000
 
 
 data_params:
@@ -10,7 +14,6 @@ data_params:
   val_batch_size:  64
   patch_size: 64
   num_workers: 40
-
 
 exp_params:
   LR: 0.005
@@ -27,4 +30,5 @@ trainer_params:
 logging_params:
   save_dir: "logs/"
   name: "Dsprite_Vanila_VAE_1"
+  manual_seed: 1265
   

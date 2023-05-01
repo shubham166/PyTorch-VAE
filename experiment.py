@@ -28,7 +28,7 @@ class VAEXperiment(pl.LightningModule):
             self.hold_graph = self.params['retain_first_backpass']
         except:
             pass
-        summary(self.model, (1, 64, 64))
+        # summary(self.model, (1, 64, 64))
 
     def forward(self, input: Tensor, **kwargs) -> Tensor:
         return self.model(input, **kwargs)
