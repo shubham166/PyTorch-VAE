@@ -32,5 +32,5 @@ dataloader_params:
 
 logging_params:
   save_dir: "logs/"
-  name: "Dsprite_Vanila_VAE"
+  name: "Dsprite_Vanila_VAE_1"
   
