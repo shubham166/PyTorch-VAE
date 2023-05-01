@@ -29,6 +29,6 @@ trainer_params:
 
 logging_params:
   save_dir: "logs/"
-  name: "Dsprite_Vanila_VAE_1"
+  name: "Dsprite_Beta_VAE"
   manual_seed: 1265
   
