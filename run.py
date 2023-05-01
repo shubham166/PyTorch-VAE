@@ -35,6 +35,7 @@ tb_logger =  TensorBoardLogger(save_dir=config['logging_params']['save_dir'],
 
 # For reproducibility
 # seed_everything(config['exp_params']['manual_seed'], True)
+torch.manual_seed(config['exp_params']['manual_seed'])
 
 model = vae_models[config['model_params']['name']](**config['model_params'])
 experiment = VAEXperiment(model,

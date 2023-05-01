@@ -9,7 +9,7 @@ data_params:
   train_batch_size: 64
   val_batch_size:  64
   patch_size: 64
-  num_workers: 40
+  # num_workers: 40
 
 
 exp_params:
@@ -20,9 +20,9 @@ exp_params:
   manual_seed: 1265
 
 trainer_params:
-  accelerator: "gpu"
-  devices: 8
-  max_epochs: 100
+  # accelerator: "gpu"
+  # devices: 8
+  max_epochs: 1
 
 logging_params:
   save_dir: "logs/"
