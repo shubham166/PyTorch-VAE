@@ -10,7 +10,8 @@ from pytorch_lightning import LightningDataModule
 class DspritesDataset(Dataset):
     def __init__(
         self,
-        dataset_url="https://github.com/deepmind/dsprites-dataset/raw/master/dsprites_ndarray_co1sh3sc6or40x32y32_64x64.npz"
+        dataset_url="https://github.com/deepmind/dsprites-dataset/raw/master/dsprites_ndarray_co1sh3sc6or40x32y32_64x64.npz",
+        val_set=False
     ):
         data_dir = "./Data/dsprite/"
         if not os.path.exists(data_dir):
@@ -21,12 +22,17 @@ class DspritesDataset(Dataset):
             data = np.load(file)
             self.image_ndarray = data["imgs"]       # 737280 x 64 x 64, uint8
             break
+        self.val_set = val_set
 
         print(f"Shape of image_ndarray = {self.image_ndarray.shape}")
     
 
     def __len__(self):
-        return self.image_ndarray.shape[0]
+        if self.val_set:
+            print("This is val_set")
+            return 1000
+        else:
+            return self.image_ndarray.shape[0]
     
     def __getitem__(self, index):
         return self.image_ndarray[index].reshape((1, 64, 64)).astype(np.float32), 0.0 # dummy datat to prevent breaking 
@@ -99,7 +105,7 @@ class DspriteVAEDataset(LightningDataModule):
         self.train_dataset = DspritesDataset()
         
         # Replace CelebA with your dataset
-        self.val_dataset = DspritesDataset()
+        self.val_dataset = DspritesDataset(val_set=True)
 #       ===============================================================
         
     def train_dataloader(self) -> DataLoader:
