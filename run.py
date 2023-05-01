@@ -3,15 +3,16 @@ import yaml
 import argparse
 import numpy as np
 from pathlib import Path
+from dsprite_dataset import DspriteVAEDataset, DspritesDataset
 from models import *
 from experiment import VAEXperiment
 import torch.backends.cudnn as cudnn
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import TensorBoardLogger
-from pytorch_lightning.utilities.seed import seed_everything
+# from pytorch_lightning.utilities.seed import seed_everything
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from dataset import VAEDataset
-from pytorch_lightning.plugins import DDPPlugin
+# from pytorch_lightning.plugins import DDPPlugin
 
 
 parser = argparse.ArgumentParser(description='Generic runner for VAE models')
@@ -33,13 +34,14 @@ tb_logger =  TensorBoardLogger(save_dir=config['logging_params']['save_dir'],
                                name=config['model_params']['name'],)
 
 # For reproducibility
-seed_everything(config['exp_params']['manual_seed'], True)
+# seed_everything(config['exp_params']['manual_seed'], True)
 
 model = vae_models[config['model_params']['name']](**config['model_params'])
 experiment = VAEXperiment(model,
                           config['exp_params'])
 
-data = VAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
+# data = VAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
+data = DspriteVAEDataset()
 
 data.setup()
 runner = Trainer(logger=tb_logger,
@@ -50,7 +52,8 @@ runner = Trainer(logger=tb_logger,
                                      monitor= "val_loss",
                                      save_last= True),
                  ],
-                 strategy=DDPPlugin(find_unused_parameters=False),
+                #  strategy=DDPPlugin(find_unused_parameters=False),
+                # plugins=LightningEnvironment()
                  **config['trainer_params'])
 
 
