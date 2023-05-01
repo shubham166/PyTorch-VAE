@@ -16,6 +16,7 @@ class VanillaVAE(BaseVAE):
                  **kwargs) -> None:
         super(VanillaVAE, self).__init__()
 
+        self.input_channels = in_channels
         self.latent_dim = latent_dim
 
         modules = []
@@ -71,10 +72,10 @@ class VanillaVAE(BaseVAE):
                                                output_padding=1),
                             nn.BatchNorm2d(hidden_dims[-1]),
                             nn.LeakyReLU(),
-                            nn.Conv2d(hidden_dims[-1], out_channels=in_channels,
+                            nn.Conv2d(hidden_dims[-1], out_channels=self.input_channels,
                                       kernel_size= 3, padding= 1),
                             nn.Tanh())
-        # summary(self, (64, 64))
+        # summary(self, (1, 64, 64))
 
     def encode(self, input: Tensor) -> List[Tensor]:
         """
