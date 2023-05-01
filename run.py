@@ -41,7 +41,7 @@ experiment = VAEXperiment(model,
                           config['exp_params'])
 
 # data = VAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
-data = DspriteVAEDataset()
+data = DspriteVAEDataset(**config["dataloader_params"])
 
 data.setup()
 runner = Trainer(logger=tb_logger,

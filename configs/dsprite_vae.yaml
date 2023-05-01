@@ -1,5 +1,5 @@
 model_params:
-  name: 'VanillaVAE'
+  name: 'Dsprite_Vanila_VAE'
   in_channels: 1
   latent_dim: 128
 
@@ -25,7 +25,12 @@ trainer_params:
   devices: 8
   max_epochs: 100
 
+dataloader_params:
+  num_workers: 40
+  train_batch_size: 64
+  pin_memory: True
+
 logging_params:
   save_dir: "logs/"
-  name: "VanillaVAE"
+  name: "Dsprite_Vanila_VAE"
   
