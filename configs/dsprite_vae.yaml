@@ -1,5 +1,5 @@
 model_params:
-  name: "Dsprite_Vanila_VAE"
+  name: "VanillaVAE"
   in_channels: 1
   latent_dim: 128
 
