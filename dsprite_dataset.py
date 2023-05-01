@@ -23,13 +23,12 @@ class DspritesDataset(Dataset):
             self.image_ndarray = data["imgs"]       # 737280 x 64 x 64, uint8
             break
         self.val_set = val_set
-
-        print(f"Shape of image_ndarray = {self.image_ndarray.shape}")
+        
+        print(f"Shape of image_ndarray = {self.__len__(), self.image_ndarray.shape[1:]}")
     
 
     def __len__(self):
         if self.val_set:
-            print("This is val_set")
             return 1000
         else:
             return self.image_ndarray.shape[0]
