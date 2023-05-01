@@ -10,6 +10,7 @@ from torchvision import transforms
 import torchvision.utils as vutils
 from torchvision.datasets import CelebA
 from torch.utils.data import DataLoader
+from torchsummary import summary
 
 
 class VAEXperiment(pl.LightningModule):
@@ -27,6 +28,7 @@ class VAEXperiment(pl.LightningModule):
             self.hold_graph = self.params['retain_first_backpass']
         except:
             pass
+        summary(self.model, (1, 64, 64))
 
     def forward(self, input: Tensor, **kwargs) -> Tensor:
         return self.model(input, **kwargs)

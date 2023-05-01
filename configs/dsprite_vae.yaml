@@ -9,7 +9,7 @@ data_params:
   train_batch_size: 64
   val_batch_size:  64
   patch_size: 64
-  num_workers: 4
+  num_workers: 40
 
 
 exp_params:
@@ -20,15 +20,9 @@ exp_params:
   manual_seed: 1265
 
 trainer_params:
-  # gpus: []
   accelerator: "gpu"
   devices: 8
   max_epochs: 100
-
-dataloader_params:
-  num_workers: 40
-  train_batch_size: 64
-  pin_memory: True
 
 logging_params:
   save_dir: "logs/"

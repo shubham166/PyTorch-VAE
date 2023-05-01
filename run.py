@@ -31,7 +31,7 @@ with open(args.filename, 'r') as file:
 
 
 tb_logger =  TensorBoardLogger(save_dir=config['logging_params']['save_dir'],
-                               name=config['model_params']['name'],)
+                               name=config['logging_params']['name'],)
 
 # For reproducibility
 # seed_everything(config['exp_params']['manual_seed'], True)
@@ -41,7 +41,7 @@ experiment = VAEXperiment(model,
                           config['exp_params'])
 
 # data = VAEDataset(**config["data_params"], pin_memory=len(config['trainer_params']['gpus']) != 0)
-data = DspriteVAEDataset(**config["dataloader_params"])
+data = DspriteVAEDataset(**config["data_params"], pin_memory=config['trainer_params']['accelerator'] == "gpu")
 
 data.setup()
 runner = Trainer(logger=tb_logger,

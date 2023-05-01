@@ -3,7 +3,7 @@ from models import BaseVAE
 from torch import nn
 from torch.nn import functional as F
 from .types_ import *
-from torchsummary import summary
+
 
 
 class VanillaVAE(BaseVAE):
@@ -75,7 +75,6 @@ class VanillaVAE(BaseVAE):
                             nn.Conv2d(hidden_dims[-1], out_channels=self.input_channels,
                                       kernel_size= 3, padding= 1),
                             nn.Tanh())
-        # summary(self, (1, 64, 64))
 
     def encode(self, input: Tensor) -> List[Tensor]:
         """
@@ -166,11 +165,16 @@ class VanillaVAE(BaseVAE):
         samples = self.decode(z)
         return samples
 
-    def generate(self, x: Tensor, **kwargs) -> Tensor:
+    def generate(self, x: Tensor, only_decoder=False, **kwargs) -> Tensor:
         """
         Given an input image x, returns the reconstructed image
         :param x: (Tensor) [B x C x H x W]
         :return: (Tensor) [B x C x H x W]
         """
-
-        return self.forward(x)[0]
+        if not only_decoder:
+            return self.forward(x)[0]
+        else:
+            mu, log_var = self.encode(input)
+            std = torch.exp(0.5 * log_var)
+            eps = torch.randn_like(std)
+            return [self.decode(eps), input, torch.zeros_like(mu), torch.ones_like(std)]
